@@ -1,0 +1,4 @@
+SELECT name, count(*) as total, collect_set(city) as origins FROM flights
+JOIN carriers ON flights.uniquecarrier = carriers.uniquecarrier
+JOIN airports ON flights.origin = airports.iata
+WHERE cancelled = 1 GROUP BY name HAVING total > 1 DISTRIBUTE BY total SORT BY total DESC;
